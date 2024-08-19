@@ -1,0 +1,198 @@
+(* Content-type: application/vnd.wolfram.cdf.text *)
+
+(*** Wolfram CDF File ***)
+(* http://www.wolfram.com/cdf *)
+
+(* CreatedBy='Wolfram 14.1' *)
+
+(*************************************************************************)
+(*                                                                       *)
+(*                                                                       *)
+(*  This file was created under the Wolfram Enterprise licensing terms.  *)
+(*                                                                       *)
+(*       For additional information concerning CDF licensing see:        *)
+(*                                                                       *)
+(*        www.wolfram.com/cdf/adopting-cdf/licensing-options.html        *)
+(*                                                                       *)
+(*                                                                       *)
+(*                                                                       *)
+(*************************************************************************)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[      1060,         20]
+NotebookDataLength[      6694,        175]
+NotebookOptionsPosition[      7234,        174]
+NotebookOutlinePosition[      7641,        190]
+CellTagsIndexPosition[      7598,        187]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+Cell[BoxData[
+ RowBox[{
+  RowBox[{
+   RowBox[{
+    RowBox[{"ConvertMIDIToSRT", "[", 
+     RowBox[{"midiPath_String", ",", "srtPath_String"}], "]"}], ":=", 
+    RowBox[{"Module", "[", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{
+       "midiData", ",", "notes", ",", "dynamicDurations", ",", "timeToSRT", 
+        ",", "srtContent"}], "}"}], ",", 
+      RowBox[{"(*", "\:5bfc\:5165MIDI\:6570\:636e", "*)"}], 
+      RowBox[{
+       RowBox[{"midiData", "=", 
+        RowBox[{"Import", "[", "midiPath", "]"}]}], ";", 
+       "\[IndentingNewLine]", 
+       RowBox[{"notes", "=", 
+        RowBox[{"Cases", "[", 
+         RowBox[{"midiData", ",", 
+          RowBox[{
+           RowBox[{"SoundNote", "[", 
+            RowBox[{"p_", ",", 
+             RowBox[{"{", 
+              RowBox[{"t_", ",", "d_"}], "}"}], ",", "___"}], "]"}], ":>", 
+           RowBox[{"{", 
+            RowBox[{"p", ",", "t"}], "}"}]}], ",", "\[Infinity]"}], "]"}]}], 
+       ";", "\[IndentingNewLine]", 
+       RowBox[{
+       "(*", "\:5b9a\:4e49\:65f6\:95f4\:8f6c\:6362\:4e3aSRT\:683c\:5f0f\:7684\
+\:51fd\:6570", "*)"}], 
+       RowBox[{
+        RowBox[{"timeToSRT", "[", "time_", "]"}], ":=", 
+        RowBox[{"Module", "[", 
+         RowBox[{
+          RowBox[{"{", 
+           RowBox[{"h", ",", "m", ",", "s", ",", "ms"}], "}"}], ",", 
+          RowBox[{
+           RowBox[{"h", "=", 
+            RowBox[{"IntegerPart", "[", 
+             RowBox[{"time", "/", "3600"}], "]"}]}], ";", 
+           "\[IndentingNewLine]", 
+           RowBox[{"m", "=", 
+            RowBox[{"IntegerPart", "[", 
+             RowBox[{
+              RowBox[{"Mod", "[", 
+               RowBox[{"time", ",", "3600"}], "]"}], "/", "60"}], "]"}]}], 
+           ";", "\[IndentingNewLine]", 
+           RowBox[{"s", "=", 
+            RowBox[{"IntegerPart", "[", 
+             RowBox[{"Mod", "[", 
+              RowBox[{"time", ",", "60"}], "]"}], "]"}]}], ";", 
+           "\[IndentingNewLine]", 
+           RowBox[{"ms", "=", 
+            RowBox[{"IntegerPart", "[", 
+             RowBox[{
+              RowBox[{"Mod", "[", 
+               RowBox[{"time", ",", "1"}], "]"}], "*", "1000"}], "]"}]}], ";",
+            "\[IndentingNewLine]", 
+           RowBox[{"StringJoin", "[", 
+            RowBox[{
+             RowBox[{"StringPadLeft", "[", 
+              RowBox[{
+               RowBox[{"ToString", "[", "h", "]"}], ",", "2", ",", 
+               "\"\<0\>\""}], "]"}], ",", "\"\<:\>\"", ",", 
+             RowBox[{"StringPadLeft", "[", 
+              RowBox[{
+               RowBox[{"ToString", "[", "m", "]"}], ",", "2", ",", 
+               "\"\<0\>\""}], "]"}], ",", "\"\<:\>\"", ",", 
+             RowBox[{"StringPadLeft", "[", 
+              RowBox[{
+               RowBox[{"ToString", "[", "s", "]"}], ",", "2", ",", 
+               "\"\<0\>\""}], "]"}], ",", "\"\<,\>\"", ",", 
+             RowBox[{"StringPadLeft", "[", 
+              RowBox[{
+               RowBox[{"ToString", "[", "ms", "]"}], ",", "3", ",", 
+               "\"\<0\>\""}], "]"}]}], "]"}]}]}], "]"}]}], ";", 
+       "\[IndentingNewLine]", 
+       RowBox[{"(*", "\:8ba1\:7b97\:52a8\:6001\:7684duration", "*)"}], 
+       RowBox[{"dynamicDurations", "=", 
+        RowBox[{"Append", "[", 
+         RowBox[{
+          RowBox[{"Differences", "[", 
+           RowBox[{"notes", "[", 
+            RowBox[{"[", 
+             RowBox[{"All", ",", "2"}], "]"}], "]"}], "]"}], ",", "0.5"}], 
+         "]"}]}], ";", 
+       RowBox[{"(*", 
+        RowBox[{
+        "\:6700\:540e\:4e00\:4e2a\:97f3\:7b26\:7684duration\:4e3a0", ".5", 
+         "\:79d2"}], "*)"}], 
+       RowBox[{"(*", "\:751f\:6210SRT\:5185\:5bb9", "*)"}], 
+       RowBox[{"srtContent", "=", 
+        RowBox[{"StringRiffle", "[", 
+         RowBox[{
+          RowBox[{"Table", "[", 
+           RowBox[{
+            RowBox[{"With", "[", 
+             RowBox[{
+              RowBox[{"{", 
+               RowBox[{
+                RowBox[{"pitch", "=", 
+                 RowBox[{"notes", "[", 
+                  RowBox[{"[", 
+                   RowBox[{"i", ",", "1"}], "]"}], "]"}]}], ",", 
+                RowBox[{"start", "=", 
+                 RowBox[{"notes", "[", 
+                  RowBox[{"[", 
+                   RowBox[{"i", ",", "2"}], "]"}], "]"}]}], ",", 
+                RowBox[{"duration", "=", 
+                 RowBox[{"dynamicDurations", "[", 
+                  RowBox[{"[", "i", "]"}], "]"}]}]}], "}"}], ",", 
+              RowBox[{"StringJoin", "[", 
+               RowBox[{
+                RowBox[{"ToString", "[", "i", "]"}], ",", "\"\<\\n\>\"", ",", 
+                RowBox[{"timeToSRT", "[", "start", "]"}], ",", 
+                "\"\< --> \>\"", ",", 
+                RowBox[{"timeToSRT", "[", 
+                 RowBox[{"start", "+", "duration"}], "]"}], ",", 
+                "\"\<\\n\>\"", ",", "pitch", ",", "\"\<\\n\\n\>\""}], "]"}]}],
+              "]"}], ",", 
+            RowBox[{"{", 
+             RowBox[{"i", ",", "1", ",", 
+              RowBox[{"Length", "[", "notes", "]"}]}], "}"}]}], "]"}], ",", 
+          "\"\<\\n\>\""}], "]"}]}], ";", "\[IndentingNewLine]", 
+       RowBox[{"(*", "\:5bfc\:51faSRT\:6587\:4ef6", "*)"}], 
+       RowBox[{"Export", "[", 
+        RowBox[{"srtPath", ",", "srtContent", ",", "\"\<Text\>\""}], 
+        "]"}]}]}], "]"}]}], ";"}], "\[IndentingNewLine]", 
+  "\[IndentingNewLine]", 
+  RowBox[{"(*", "\:4f7f\:7528\:65b9\:6cd5\:793a\:4f8b", "*)"}], "\n", 
+  RowBox[{"(*", 
+   RowBox[{"ConvertMIDIToSRT", "[", 
+    RowBox[{
+    "\"\<C:\\\\Users\\\\contact\\\\Desktop\\\\5.mid\>\"", ",", 
+     "\"\<C:\\\\Users\\\\contact\\\\Desktop\\\\output.srt\>\""}], "]"}], 
+   "*)"}], "\[IndentingNewLine]"}]], "Input",
+ CellChangeTimes->{{3.93309508486005*^9, 
+  3.93309508486005*^9}},ExpressionUUID->"cbd94a8b-5f95-7048-95d2-\
+5403b9e28cf1"]
+},
+WindowSize->{571.8, 509.4},
+WindowMargins->{{284.4, Automatic}, {Automatic, 47.4}},
+FrontEndVersion->"14.1 for Microsoft Windows (64-bit) (July 16, 2024)",
+StyleDefinitions->"Default.nb",
+ExpressionUUID->"93a5f7cb-ea9f-f94d-a6c8-a6c5d4e6dee1"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[1460, 33, 5770, 139, 604, "Input",ExpressionUUID->"cbd94a8b-5f95-7048-95d2-5403b9e28cf1"]
+}
+]
+*)
+
+(* End of internal cache information *)
+
